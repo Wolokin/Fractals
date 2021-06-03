@@ -3,7 +3,7 @@
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
-    fractal = make_unique<Fractal>(new Mandelbrot);
+    fractal = make_unique<Fractal>(fractals.at("Mandelbrot"));
     QTimer *aTimer = new QTimer;
     connect(aTimer,SIGNAL(timeout()),SLOT(repaint()));
     aTimer->start(30);

@@ -1,5 +1,5 @@
-#ifndef FRACTALS_FRACTAL_H
-#define FRACTALS_FRACTAL_H
+#ifndef FRACTALS_DISPLAYER_H
+#define FRACTALS_DISPLAYER_H
 
 #include "constants.h"
 #include "generators.h"
@@ -48,4 +48,4 @@ public:
     void abortCalculations() { calculating = false; };
 };
 
-#endif //FRACTALS_FRACTAL_H
+#endif //FRACTALS_DISPLAYER_H

@@ -63,16 +63,16 @@ public:
 //        ComplexSeriesFractal([f](complex<double> zn, double x, double y) {return zn*zn + f(zn,x,y);}) {}
 //};
 
-// Standard Mandelbrot set
-class Mandelbrot : public ComplexSeriesFractal {
-public:
-    Mandelbrot() : ComplexSeriesFractal([](complex<double> zn, double x, double y) { return zn*zn + complex<double>(x,y);}) {}
-};
+// // Standard Mandelbrot set
+// class Mandelbrot : public ComplexSeriesFractal {
+// public:
+//     Mandelbrot() : ComplexSeriesFractal([](complex<double> zn, double x, double y) { return zn*zn + complex<double>(x,y);}) {}
+// };
 
-class Tricorn : public ComplexSeriesFractal {
-public:
-    Tricorn() : ComplexSeriesFractal([](complex<double> zn, double x, double y) { return pow(conj(zn), 2) + complex<double>(x,y);}) {}
-};
+// class Tricorn : public ComplexSeriesFractal {
+// public:
+//     Tricorn() : ComplexSeriesFractal([](complex<double> zn, double x, double y) { return pow(conj(zn), 2) + complex<double>(x,y);}) {}
+// };
 
 class Test : public ComplexSeriesFractal {
 public:

@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "myglwidget.h"
 
 #include <QApplication>
 

@@ -1,4 +1,4 @@
-#include "fractal.h"
+#include "displayer.h"
 #include <ctime>
 
 

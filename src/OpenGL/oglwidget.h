@@ -10,9 +10,9 @@
 #include <GL/glu.h>
 #include <GL/gl.h>
 #include <thread>
-#include "constants.h"
-#include "fractal.h"
-#include "generators.h"
+#include "src/Logic/constants.h"
+#include "src/Logic/displayer.h"
+#include "src/Logic/generators.h"
 #include <string>
 #include <map>
 

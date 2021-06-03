@@ -34,31 +34,28 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
         src/main.cpp
-        src/mainwindow.cpp
-        src/mainwindow.h
-        src/mainwindow.ui
-        src/mydialog.h src/mydialog.cpp src/mydialog.ui
-        src/myglwidget.h src/myglwidget.cpp src/myglwidget.ui
-        src/fractal.h 
-        src/constants.h 
-        src/fractal.cpp 
-        src/generators.h 
-        src/generators.cpp 
-        src/colorPalette.cpp 
-        src/colorPalette.h 
-        src/palettes.h 
-        src/tmp.h
-        src/oglwidget.h src/oglwidget.cpp
-        src/combobox_fractals.h src/combobox_fractals.cpp
-        src/combobox_palettes.h src/combobox_palettes.cpp
-        src/fractals.cpp
+        src/GUI/mainwindow.cpp
+        src/GUI/mainwindow.h
+        src/GUI/mainwindow.ui
+        src/Logic/displayer.h
+        src/Logic/constants.h
+        src/Logic/displayer.cpp
+        src/Logic/generators.h
+        src/Logic/generators.cpp
+        src/Logic/colorPalette.cpp
+        src/Logic/colorPalette.h
+        src/Logic/palettes.h
+        src/OpenGL/oglwidget.h src/OpenGL/oglwidget.cpp
+        src/GUI/combobox_fractals.h src/GUI/combobox_fractals.cpp
+        src/GUI/combobox_palettes.h src/GUI/combobox_palettes.cpp
+        src/Logic/fractals.cpp
 )
 
 # adding boost dirs
 FIND_PACKAGE( Boost 1.71 COMPONENTS program_options REQUIRED )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-include_directories("./src")
+include_directories("." "./src" "./src/Logic" "./src/OpenGL" "./src/GUI")
 
 find_library(FREEGLUT_LIB glut)
 find_library(GL_LIB GL)
