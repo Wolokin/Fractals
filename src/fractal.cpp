@@ -2,13 +2,19 @@
 #include "fractal.h"
 #include <ctime>
 
+
+Fractal::Fractal(Generator* gen, double x1, double y1, double x2, double y2, size_t windowHeight, size_t windowWidth) 
+: gen{gen}, x1{x1}, y1{y1}, x2{x2}, y2{y2}, windowHeight{windowHeight}, windowWidth{windowWidth} {
+    resize(windowWidth, windowHeight);
+}
+
 long get_timestamp() {
     struct timespec spec;
     clock_gettime(CLOCK_REALTIME, &spec);
     return spec.tv_sec * 1000000 + spec.tv_nsec / 1000;
 }
 
-void Fractal::recalculateHelper(size_t start, size_t stop) {
+void Fractal::recalculateThread(size_t start, size_t stop) {
     long t = get_timestamp();
     for(size_t i = start; i < stop; ++i) {
         if(not calculating) return;
@@ -16,24 +22,28 @@ void Fractal::recalculateHelper(size_t start, size_t stop) {
             double x = x1 + ((x2-x1) * j) / windowWidth;
             double y = y1 + ((y2-y1) * i) / windowHeight;
             rgb c = gen->getColor(x,y);
-            texture[windowHeight - i - 1][j][0] = c[0];
-            texture[windowHeight - i - 1][j][1] = c[1];
-            texture[windowHeight - i - 1][j][2] = c[2];
+            texture[(windowHeight - i - 1)*(windowWidth*pixelDataLen)+j*pixelDataLen+0] = c[0];
+            texture[(windowHeight - i - 1)*(windowWidth*pixelDataLen)+j*pixelDataLen+1] = c[1];
+            texture[(windowHeight - i - 1)*(windowWidth*pixelDataLen)+j*pixelDataLen+2] = c[2];
         }
     }
     // cout << get_timestamp() - t << endl;
 }
 
-void Fractal::recalculateTexture() {
+void Fractal::recalculateHelper() {
     thread threads[thread_count];
     calculating = true;
     for(size_t i = 0; i < thread_count; ++i) {
-        threads[i] = std::thread([this,i](){ recalculateHelper(i*windowHeight/thread_count, (i+1)*windowHeight/thread_count);});
+        threads[i] = std::thread([this,i](){ recalculateThread(i*windowHeight/thread_count, (i+1)*windowHeight/thread_count);});
     }
     for(auto & thread : threads) {
         thread.join();
     }
     calculating = false;
+}
+
+void Fractal::recalculateTexture() {
+    recalculateHelper();
 }
 
 void Fractal::zoomIn(int x, int y) {
@@ -55,6 +65,13 @@ void Fractal::zoomHelper(int x, int y, double ratio) {
     x1 = newCenterX - newSizeX;
     y2 = newCenterY + newSizeY;
     y1 = newCenterY - newSizeY;
+}
+
+void Fractal::resize(size_t width, size_t height) {
+    windowWidth = width;
+    windowHeight = height;
+    texture.reserve(windowWidth*windowHeight*pixelDataLen);
+    recalculateTexture();
 }
 
 void Fractal::reposition(int x, int y) {

@@ -42,7 +42,7 @@ public:
 // The general equation is z_n+1 = f(z_n,x,y)
 // and the point (x,y) is colored in regards to
 // iterations needed for it to exceed an abs value of 2
-//template<complex<double> (*F)(complex<double>, double, double)>
+// template<complex<double> (*F)(complex<double>, double, double)>
 class ComplexSeriesFractal : public Generator {
     complex<double> (*f)(complex<double>, double, double);
 public:
@@ -69,6 +69,11 @@ public:
 class Tricorn : public ComplexSeriesFractal {
 public:
     Tricorn() : ComplexSeriesFractal([](complex<double> zn, double x, double y) { return pow(conj(zn), 7) + complex<double>(x,y);}) {}
+};
+
+class Test : public ComplexSeriesFractal {
+public:
+    Test() : ComplexSeriesFractal([](complex<double> zn, double x, double y) { return zn*zn*zn + complex<double>(-0.7,0.27015);}) {}
 };
 
 

@@ -8,25 +8,31 @@ class Fractal {
     constexpr static const double zoomRatio = 0.9;
     static const int thread_count = 20;
 
+    size_t windowWidth, windowHeight;
+
     unique_ptr<Generator> gen;
-    float texture[windowHeight][windowWidth][pixelDataLen]{};
+    vector<rgb_value_type> texture;
     double x1,y1,x2,y2;
 
     void zoomHelper(int x, int y, double ratio);
-    void recalculateHelper(size_t start, size_t stop);
+    void recalculateHelper();
+    void recalculateThread(size_t start, size_t stop);
 
     bool calculating = false;
 
 public:
-    explicit Fractal(Generator* gen = nullptr, double x1 = 0, double y1 = 0, double x2 = windowWidth, double y2 = windowHeight)
-        : gen{gen}, x1{x1}, y1{y1}, x2{x2}, y2{y2} {};
+    explicit Fractal(Generator* gen = nullptr, double x1 = 0, double y1 = 0, double x2 = defWindowWidth, double y2 = defWindowHeight, size_t windowHeight = defWindowHeight, size_t windowWidth = defWindowWidth);
     Fractal& operator=(Fractal frac) { gen = move(frac.gen); return *this; }
 
     void recalculateTexture();
-    float* getTexture() { return &texture[0][0][0];}
+
+    rgb_value_type* getTexture() { return texture.data();}
+    size_t getWidth() { return windowWidth; }
+    size_t getHeight() { return windowHeight; }
     void zoomIn(int x, int y);
     void zoomOut(int x, int y);
     void reposition(int x, int y);
+    void resize(size_t width, size_t height);
 
     void increaseMaxIter() { gen->increaseMaxIter(); }
     void decreaseMaxIter() { gen->decreaseMaxIter(); }

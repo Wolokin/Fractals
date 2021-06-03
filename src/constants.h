@@ -3,10 +3,11 @@
 
 #include <cstdlib>
 #include <array>
+#include <iostream>
 
 // Initial window size
-const size_t windowWidth = 800;
-const size_t windowHeight = 800;
+const size_t defWindowWidth = 800;
+const size_t defWindowHeight = 800;
 
 // Initial window position
 const size_t windowXPos = 100;

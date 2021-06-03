@@ -10,7 +10,7 @@
 
 using namespace std;
 
-const float normalize_to_float = 256;
+const rgb_value_type normalize_to_float = 256;
 
 const map<string, vector<rgb>> palettes = {
         {
