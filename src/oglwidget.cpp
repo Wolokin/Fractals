@@ -3,8 +3,7 @@
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
-    fractal = make_unique<Fractal>(new Mandelbrot, -2.5,-2.5, 2.5,2.5);
-    fractal->recalculateTexture();
+    fractal = make_unique<Fractal>(new Mandelbrot);
     QTimer *aTimer = new QTimer;
     connect(aTimer,SIGNAL(timeout()),SLOT(repaint()));
     aTimer->start(30);
@@ -13,9 +12,6 @@ OGLWidget::OGLWidget(QWidget *parent)
 
 OGLWidget::~OGLWidget()
 {
-    if(calculationThread.joinable()) {
-        calculationThread.join();
-    }
 }
 
 void OGLWidget::initializeGL()
@@ -77,18 +73,17 @@ void OGLWidget::resizeGL(int w, int h)
 //    gluLookAt(0,0,5,0,0,0,0,1,0);
 }
 
-void OGLWidget::recalculate() {
-    fractal->abortCalculations();
-    if(calculationThread.joinable()) {
-        calculationThread.join();
-    }
-    calculationThread = std::thread([this]{fractal->recalculateTexture();});
-}
+// void OGLWidget::recalculate() {
+//     fractal->abortCalculations();
+//     if(calculationThread.joinable()) {
+//         calculationThread.join();
+//     }
+//     calculationThread = std::thread([this]{fractal->recalculateTexture();});
+// }
 
 void OGLWidget::mousePressEvent(QMouseEvent* e) {
     //std::cout << e->localPos().x() << " " << e->localPos().y() << endl;
     fractal->reposition(e->localPos().x(), e->localPos().y());
-    recalculate();
 }
 
 void OGLWidget::wheelEvent(QWheelEvent* e) {
@@ -99,6 +94,12 @@ void OGLWidget::wheelEvent(QWheelEvent* e) {
     else {
         fractal->zoomIn(e->pos().x(), e->pos().y());
     }
-    recalculate();
 }
 
+void OGLWidget::changeFractal(QString name) {
+    fractal->setGenerator(fractals.at(name.toStdString()));
+}
+
+void OGLWidget::changePalette(QString name) {
+    fractal->setPalette(name.toStdString());
+}

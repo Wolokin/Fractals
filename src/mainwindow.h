@@ -2,9 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "mydialog.h"
-
-#include <QMainWindow>
 
 namespace Ui {
 class MainWindow;

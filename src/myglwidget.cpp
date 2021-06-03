@@ -11,7 +11,7 @@ MyGLWidget::MyGLWidget(QWidget *parent) : QOpenGLWidget(parent)
     format.setVersion(4, 3);
     format.setProfile(QSurfaceFormat::CoreProfile);
     setFormat(format);
-    fractal = make_unique<Fractal>(new Mandelbrot, -2.5,-2.5, 2.5,2.5);
+    fractal = make_unique<Fractal>(new Mandelbrot);
     //m_context = new QOpenGLContext(this);
 }
 

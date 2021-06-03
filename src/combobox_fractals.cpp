@@ -3,13 +3,9 @@
 
 comboBox_fractals::comboBox_fractals(QWidget *parent) : QComboBox(parent)
 {
-    addItem("Option 1");
-    addItem("Option 2");
-    addItem("Option 3");
+    for(auto it : OGLWidget::fractals) {
+        addItem(QString::fromStdString(it.first));
+    }
 
-    connect(this, SIGNAL(currentTextChanged(QString)), this, SLOT(textChanged(QString)));
-}
-
-void comboBox_fractals::textChanged(const QString &text) {
-    std::cout << text.toStdString() << std::endl;
+    //connect(this, SIGNAL(currentTextChanged(QString)), this, SLOT(textChanged(QString)));
 }

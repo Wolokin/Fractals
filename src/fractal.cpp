@@ -1,11 +1,15 @@
-#include <thread>
 #include "fractal.h"
 #include <ctime>
 
 
-Fractal::Fractal(Generator* gen, double x1, double y1, double x2, double y2, size_t windowHeight, size_t windowWidth) 
-: gen{gen}, x1{x1}, y1{y1}, x2{x2}, y2{y2}, windowHeight{windowHeight}, windowWidth{windowWidth} {
-    resize(windowWidth, windowHeight);
+Fractal::Fractal(Generator* gen) {
+    setGenerator(gen);
+}
+
+Fractal::~Fractal() {
+    if(calculationThread.joinable()) {
+        calculationThread.join();
+    }
 }
 
 long get_timestamp() {
@@ -43,7 +47,11 @@ void Fractal::recalculateHelper() {
 }
 
 void Fractal::recalculateTexture() {
-    recalculateHelper();
+    abortCalculations();
+    if(calculationThread.joinable()) {
+        calculationThread.join();
+    }
+    calculationThread = std::thread([this]{recalculateHelper();});
 }
 
 void Fractal::zoomIn(int x, int y) {
@@ -65,6 +73,7 @@ void Fractal::zoomHelper(int x, int y, double ratio) {
     x1 = newCenterX - newSizeX;
     y2 = newCenterY + newSizeY;
     y1 = newCenterY - newSizeY;
+    recalculateTexture();
 }
 
 void Fractal::resize(size_t width, size_t height) {
@@ -76,6 +85,12 @@ void Fractal::resize(size_t width, size_t height) {
 
 void Fractal::reposition(int x, int y) {
     zoomHelper(x,y,1);
+}
+
+void Fractal::setGenerator(Generator* gen) {
+    this->gen = gen;
+    gen->setStartingIntervals(x1,x2,y1,y2);
+    recalculateTexture();
 }
 
 

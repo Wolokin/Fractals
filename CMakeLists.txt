@@ -51,6 +51,7 @@ set(PROJECT_SOURCES
         src/oglwidget.h src/oglwidget.cpp
         src/combobox_fractals.h src/combobox_fractals.cpp
         src/combobox_palettes.h src/combobox_palettes.cpp
+        src/fractals.cpp
 )
 
 # adding boost dirs

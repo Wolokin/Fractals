@@ -4,9 +4,10 @@
 #ifndef FRACTALS_PALETTES_H
 #define FRACTALS_PALETTES_H
 
-#include "vector"
-#include "vector"
-#include "string"
+#include <vector>
+#include <string>
+#include <map>
+#include "constants.h"
 
 using namespace std;
 

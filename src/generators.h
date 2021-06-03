@@ -23,8 +23,12 @@ public:
     Generator() : palette("inferno", 0, maxiter) {}
     virtual ~Generator() = default;
     virtual array<rgb_value_type, 3> getColor(double x, double y) = 0;
+    virtual void setStartingIntervals(double &x1, double &x2, double &y1, double &y2) {
+        x1 = -2.5; x2 = 2.5; y1 = -2.5; y2 = 2.5;
+    }
     void increaseMaxIter() { maxiter += maxIterChangeStep; palette.resize(0, maxiter); }
     void decreaseMaxIter() { maxiter -= maxIterChangeStep; palette.resize(0, maxiter); }
+    void setPalette(string& s) { palette = colorPalette(s, 0, maxiter); }
     void nextPalette() { palette.next(); }
     void previousPalette() { palette.previous(); }
 };
@@ -63,12 +67,11 @@ public:
 class Mandelbrot : public ComplexSeriesFractal {
 public:
     Mandelbrot() : ComplexSeriesFractal([](complex<double> zn, double x, double y) { return zn*zn + complex<double>(x,y);}) {}
-    //rgb getColor(double x, double y) override;
 };
 
 class Tricorn : public ComplexSeriesFractal {
 public:
-    Tricorn() : ComplexSeriesFractal([](complex<double> zn, double x, double y) { return pow(conj(zn), 7) + complex<double>(x,y);}) {}
+    Tricorn() : ComplexSeriesFractal([](complex<double> zn, double x, double y) { return pow(conj(zn), 2) + complex<double>(x,y);}) {}
 };
 
 class Test : public ComplexSeriesFractal {

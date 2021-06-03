@@ -13,12 +13,19 @@
 #include "constants.h"
 #include "fractal.h"
 #include "generators.h"
+#include <string>
+#include <map>
 
 class OGLWidget : public QOpenGLWidget
 {
+    Q_OBJECT
+
+
 public:
     OGLWidget(QWidget *parent = 0);
     ~OGLWidget();
+    unique_ptr<Fractal> fractal;
+    static const map<string, Generator*> fractals;
 
 protected:
     void initializeGL();
@@ -26,11 +33,12 @@ protected:
     void paintGL();
     void mousePressEvent(QMouseEvent* e) override;
     void wheelEvent(QWheelEvent* e) override;
-    void mouseMoveEvent(QMouseEvent* e) override {cout << "move" << endl;};
-private:
-    void recalculate();
-    unique_ptr<Fractal> fractal;
-    std::thread calculationThread;
+    //void mouseMoveEvent(QMouseEvent* e) override {cout << "move" << endl;};
+public slots:
+    void changeFractal(QString name);
+    void changePalette(QString name);
+    //void recalculate();
+    //std::thread calculationThread;
 };
 
 #endif // OGLWIDGET_H

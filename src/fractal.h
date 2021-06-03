@@ -3,6 +3,7 @@
 
 #include "constants.h"
 #include "generators.h"
+#include <thread>
 
 class Fractal {
     constexpr static const double zoomRatio = 0.9;
@@ -10,8 +11,9 @@ class Fractal {
 
     size_t windowWidth, windowHeight;
 
-    unique_ptr<Generator> gen;
+    Generator* gen;
     vector<rgb_value_type> texture;
+    std::thread calculationThread;
     double x1,y1,x2,y2;
 
     void zoomHelper(int x, int y, double ratio);
@@ -21,8 +23,9 @@ class Fractal {
     bool calculating = false;
 
 public:
-    explicit Fractal(Generator* gen = nullptr, double x1 = 0, double y1 = 0, double x2 = defWindowWidth, double y2 = defWindowHeight, size_t windowHeight = defWindowHeight, size_t windowWidth = defWindowWidth);
+    explicit Fractal(Generator* gen = nullptr);
     Fractal& operator=(Fractal frac) { gen = move(frac.gen); return *this; }
+    ~Fractal();
 
     void recalculateTexture();
 
@@ -33,6 +36,8 @@ public:
     void zoomOut(int x, int y);
     void reposition(int x, int y);
     void resize(size_t width, size_t height);
+    void setGenerator(Generator* gen);
+    void setPalette(string s) { gen->setPalette(s); recalculateTexture();}
 
     void increaseMaxIter() { gen->increaseMaxIter(); }
     void decreaseMaxIter() { gen->decreaseMaxIter(); }
