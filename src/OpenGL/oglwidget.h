@@ -15,6 +15,7 @@
 #include "src/Logic/generators.h"
 #include <string>
 #include <map>
+#include "fractals.h"
 
 class OGLWidget : public QOpenGLWidget
 {
@@ -22,7 +23,7 @@ class OGLWidget : public QOpenGLWidget
 
     QTimer *aTimer;
     const static size_t refreshTime = 30;
-
+    Fractals fractals;
 
 public:
     explicit OGLWidget(QWidget *parent = nullptr);

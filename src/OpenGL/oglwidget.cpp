@@ -3,7 +3,7 @@
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
-    fractal = make_unique<Fractal>(Fractal::fractals.at("Mandelbrot"));
+    fractal = make_unique<Fractal>(fractals.fractals.at("Mandelbrot"));
     aTimer = new QTimer;
     connect(aTimer,SIGNAL(timeout()),SLOT(repaint()));
     aTimer->start(30);
@@ -114,7 +114,7 @@ void OGLWidget::wheelEvent(QWheelEvent* e) {
 }
 
 void OGLWidget::changeFractal(QString name) {
-    fractal->setGenerator(Fractal::fractals.at(name.toStdString()));
+    fractal->setGenerator(fractals.fractals.at(name.toStdString()));
 }
 
 void OGLWidget::changePalette(QString name) {

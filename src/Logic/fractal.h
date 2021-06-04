@@ -10,7 +10,7 @@ class Fractal {
     static const int thread_count = 20;
     constexpr static const double expandRatio = 0.1;
 
-    size_t windowWidth, windowHeight;
+    size_t windowWidth = 0, windowHeight = 0;
 
     string currentPaletteName = default_palette;
     Generator* gen;

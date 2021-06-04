@@ -11,6 +11,7 @@
 #include "colorPalette.h"
 #include <string>
 #include <set>
+#include <mutex>
 
 using namespace std;
 
@@ -47,6 +48,7 @@ public:
 
 // Newton fractal
 class Newton : public Generator {
+    mutex mut;
     vector<complex<double>> roots;
     int whichRoot(complex<double> d);
     static bool isZero(complex<double> c) { return abs(c) < eps; }

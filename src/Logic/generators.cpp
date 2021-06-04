@@ -24,7 +24,9 @@ int Newton::whichRoot(complex<double> d) {
         }
         if (isZero(dist)) return closest;
     }
+    mut.lock();
     roots.push_back(d);
+    mut.unlock();
     updated = true;
     return (int) roots.size() - 1;
 }

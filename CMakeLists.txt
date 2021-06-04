@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # compiler flags
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -ggdb")
 
 configure_file(src/FractalsConfig.h.in FractalsConfig.h)
 
@@ -50,7 +50,7 @@ set(PROJECT_SOURCES
         src/GUI/combobox_palettes.h src/GUI/combobox_palettes.cpp
         src/Logic/fractals.cpp
         src/GUI/label_size.h src/GUI/label_size.cpp
-)
+        src/Logic/fractals.h)
 
 # adding boost dirs
 FIND_PACKAGE( Boost 1.71 COMPONENTS program_options REQUIRED )

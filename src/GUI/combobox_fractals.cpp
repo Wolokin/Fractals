@@ -3,7 +3,8 @@
 
 comboBox_fractals::comboBox_fractals(QWidget *parent) : QComboBox(parent)
 {
-    for(auto it : Fractal::fractals) {
+    Fractals fractals;
+    for(const auto& it : fractals.fractals) {
         addItem(QString::fromStdString(it.first));
     }
     setCurrentText(QString::fromStdString(default_fractal));
