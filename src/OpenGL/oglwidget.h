@@ -36,12 +36,14 @@ protected:
     void mousePressEvent(QMouseEvent* e) override;
     void wheelEvent(QWheelEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;
-    //void mouseMoveEvent(QMouseEvent* e) override {cout << "move" << endl;};
+    void mouseMoveEvent(QMouseEvent* e) override;
 public slots:
     void changeFractal(QString name);
     void changePalette(QString name);
     //void recalculate();
     //std::thread calculationThread;
+signals:
+    void mouseMoved(std::string);
 };
 
 #endif // OGLWIDGET_H

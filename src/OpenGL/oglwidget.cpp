@@ -96,12 +96,14 @@ void OGLWidget::mousePressEvent(QMouseEvent* e) {
         case Qt::MouseButton::MiddleButton:
             fractal->reposition(e->localPos().x(), e->localPos().y());
             break;
+        default:
+            return;
     }
     e->accept();
 }
 
 void OGLWidget::wheelEvent(QWheelEvent* e) {
-    cout << "wheel" << endl;
+    // cout << "wheel" << endl;
     if(e->angleDelta().y() < 0) {
         fractal->zoomOut(e->pos().x(), e->pos().y());
     }
@@ -127,6 +129,42 @@ void OGLWidget::keyPressEvent(QKeyEvent* e) {
         case Qt::Key::Key_Minus:
             fractal->decreaseMaxIter();
             break;
+        case Qt::Key::Key_BracketLeft:
+            fractal->decreaseMinIter();
+            break;
+        case Qt::Key::Key_BracketRight:
+            fractal->increaseMinIter();
+            break;
+        case Qt::Key::Key_Up:
+        case Qt::Key::Key_Down:
+            if(e->modifiers() & Qt::ControlModifier) {
+                fractal->expandHeight();
+            }
+            else {
+                fractal->dexpandHeight();
+            }
+            break;
+        case Qt::Key::Key_Right:
+        case Qt::Key::Key_Left:
+            if(e->modifiers() & Qt::ControlModifier) {
+                fractal->expandWidth();
+            }
+            else {
+                fractal->dexpandWidth();
+            }
+            break;
+        case Qt::Key::Key_R:
+            fractal->reset();
+            break;
+
     }
     e->accept();
+}
+
+void OGLWidget::mouseMoveEvent(QMouseEvent* e) {
+    auto[x,y] = fractal->transformPixelToCoords(e->pos().x(), e->pos().y());
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(15) << "x: " << x << "\ny: " << y;
+    //std::string s = "x: (" + std::to_string(x) + "), y: (" + std::to_string(y) + ")";
+    mouseMoved(ss.str());
 }

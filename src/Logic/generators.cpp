@@ -1,25 +1,47 @@
 #include "generators.h"
 
-auto f(complex<double> d) {
-    return pair(pow(d, 3) - 1.0, pow(d, 2));
-}
-
 rgb Newton::getColor(double x, double y) {
-    complex<double> d = boost::math::tools::complex_newton(f, complex<double>(x,y));
-    complex<double> eval = f(d).first;
-    auto norm = abs(eval);
-    if(isnan(norm) or norm > eps) return array<rgb_value_type, 3>();
-    int c = isClose(d);
-    if(c != -1) return array<rgb_value_type, 3>();
-    roots.push_back(d);
-    return array<rgb_value_type, 3>();
+    // std::function func = [this](complex<double> d) { return pair(this->f(d), this->df(d)); };
+    //complex<double> d = boost::math::tools::complex_newton(func, complex<double>(x, y));
+    int iter;
+    complex<double> d = newtonRaphson(complex(x,y), iter);
+    double index = whichRoot(d);
+    return palette.getColor(index*(maxiter)/(roots.size()) + (double)iter/roots.size());
 }
 
-size_t Newton::isClose(complex<double> d) {
-    for(size_t i = 0; i < roots.size(); ++i) {
-        if(abs(d-roots[i]) < eps) return i + 1;
+int Newton::whichRoot(complex<double> d) {
+    if (not isZero(f(d))) return -1;
+    if (not roots.empty()) {
+        size_t closest = 0;
+        double dist = abs(d - roots[closest]);
+        size_t i;
+        for (i = 1; i < roots.size(); ++i) {
+            double tempDist = abs(d - roots[i]);
+            if (dist > tempDist) {
+                dist = tempDist;
+                closest = i;
+            }
+        }
+        if (isZero(dist)) return closest;
     }
-    return -1;
+    roots.push_back(d);
+    updated = true;
+    return (int) roots.size() - 1;
+}
+
+complex<double> Newton::newtonRaphson(complex<double> guess, int &iter) {
+    for(iter = 0; iter < maxiter; ++iter) {
+        complex<double> eval = f(guess);
+        if(abs(eval) < eps) {
+            break;
+        }
+        guess = guess - a*eval/df(guess);
+    }
+    return guess;
+}
+
+void Newton::reset() {
+    roots.clear();
 }
 
 //rgb Mandelbrot::getColor(double x, double y) {
@@ -45,11 +67,11 @@ size_t Newton::isClose(complex<double> d) {
 //}
 
 rgb ComplexSeriesFractal::getColor(double x, double y) {
-    complex<double> zn(x,y);
-    size_t i = 0;
-    while(i < maxiter && abs(zn) < 2) {
-        zn = f(zn,x,y);
+    complex<double> zn(x, y);
+    int i = 0;
+    while (i < maxiter && abs(zn) < 2) {
+        zn = f(zn, x, y);
         ++i;
     }
-    return palette.getColor(i);
+    return palette.getColor(max(i, miniter));
 }

@@ -21,8 +21,9 @@ void Fractal::recalculateThread(size_t start, size_t stop) {
     for(size_t i = start; i < stop; ++i) {
         if(not calculating) return;
         for(size_t j = 0; j < windowWidth; ++j) {
-            double x = x1 + ((x2-x1) * j) / windowWidth;
-            double y = y1 + ((y2-y1) * i) / windowHeight;
+            //double x = x1 + ((x2-x1) * j) / windowWidth;
+            //double y = y1 + ((y2-y1) * i) / windowHeight;
+            auto[x,y] = transformPixelToCoords(j,i);
             rgb c = gen->getColor(x,y);
             texture[(windowHeight - i - 1)*(windowWidth * pixel_data_len) + j * pixel_data_len + 0] = c[0];
             texture[(windowHeight - i - 1)*(windowWidth * pixel_data_len) + j * pixel_data_len + 1] = c[1];
@@ -95,7 +96,7 @@ void Fractal::reposition(int x, int y) {
 
 void Fractal::setGenerator(Generator* gen) {
     this->gen = gen;
-    gen->setStartingIntervals(x1,x2,y1,y2);
+    gen->resetIntervals(x1, x2, y1, y2);
     gen->setPalette(currentPaletteName);
     recalculateTexture();
 }
@@ -105,6 +106,18 @@ void Fractal::abortCalculations() {
     if(calculationThread.joinable()) {
         calculationThread.join();
     }
+}
+
+std::pair<double, double> Fractal::transformPixelToCoords(size_t w, size_t h) {
+    return std::pair(x1 + ((x2-x1) * w) / windowWidth, y1 + ((y2-y1) * h) / windowHeight);
+}
+
+rgb_value_type *Fractal::getTexture() {
+    if(gen->needsUpdate() && not calculating) {
+        recalculateTexture();
+        gen->updateDone();
+    }
+    return texture.data();
 }
 
 

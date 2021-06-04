@@ -21,4 +21,7 @@ const std::string default_fractal = "Mandelbrot";
 // default palette
 const std::string default_palette = "inferno";
 
+// default palette
+const int iterChangeStep = 10;
+
 #endif //FRACTALS_CONSTANTS_H

@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->comboBox_f, SIGNAL(currentTextChanged(QString)), ui->openGLWidget, SLOT(changeFractal(QString)));
     connect(ui->comboBox_p, SIGNAL(currentTextChanged(QString)), ui->openGLWidget, SLOT(changePalette(QString)));
+    connect(ui->openGLWidget, SIGNAL(mouseMoved(std::string)), ui->size_label, SLOT(mouseMoved(std::string)));
 }
 
 MainWindow::~MainWindow()

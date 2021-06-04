@@ -10,25 +10,36 @@
 #include <cstdio>
 #include "colorPalette.h"
 #include <string>
+#include <set>
 
 using namespace std;
 
 // Abstract base generator class
 class Generator {
 protected:
-    size_t maxiter = 60;
-    size_t miniter = 0;
-    static const int maxIterChangeStep = 10;
+    const int default_maxiter = 60;
+    const int default_miniter = 0;
+
+    constexpr static const double sx1 = -2.5, sx2 = 2.5, sy1 = -2.5, sy2 = 2.5;
+    int maxiter = default_maxiter;
+    int miniter = default_miniter;
     colorPalette palette;
 public:
     Generator() : palette(default_palette, miniter, maxiter) {}
     virtual ~Generator() = default;
     virtual array<rgb_value_type, 3> getColor(double x, double y) = 0;
-    virtual void setStartingIntervals(double &x1, double &x2, double &y1, double &y2) {
-        x1 = -2.5; x2 = 2.5; y1 = -2.5; y2 = 2.5;
+    virtual void reset() {};
+    virtual bool needsUpdate() { return false; }
+    virtual void updateDone() {}
+    virtual void resetIntervals(double &x1, double &x2, double &y1, double &y2) {
+        x1 = sx1; x2 = sx2; y1 = sy1; y2 = sy2;
+        maxiter = default_maxiter;
+        miniter = default_miniter;
     }
-    void increaseMaxIter() { maxiter += maxIterChangeStep; palette.resize(miniter, maxiter); }
-    void decreaseMaxIter() { maxiter -= maxIterChangeStep; palette.resize(miniter, maxiter); }
+    void increaseMaxIter() { maxiter += iterChangeStep; palette.resize(miniter, maxiter); }
+    void decreaseMaxIter() { maxiter -= iterChangeStep; palette.resize(miniter, maxiter); }
+    void increaseMinIter() { miniter += iterChangeStep; palette.resize(miniter, maxiter); }
+    void decreaseMinIter() { miniter -= iterChangeStep; palette.resize(miniter, maxiter); }
     void setPalette(string s) { palette = colorPalette(std::move(s), miniter, maxiter); }
 //    void nextPalette() { palette.next(); }
 //    void previousPalette() { palette.previous(); }
@@ -37,9 +48,24 @@ public:
 // Newton fractal
 class Newton : public Generator {
     vector<complex<double>> roots;
-    size_t isClose(complex<double>);
+    int whichRoot(complex<double> d);
+    static bool isZero(complex<double> c) { return abs(c) < eps; }
+    complex<double> (*f)(complex<double>);
+    complex<double> (*df)(complex<double>);
+    double a;
+    bool updated = false;
+    complex<double> newtonRaphson(complex<double> guess, int &iter);
 public:
+    Newton(complex<double> (*f)(complex<double>), complex<double> (*df)(complex<double>), double a = 1) : f{f}, df{df}, a{a} {}
     rgb getColor(double x, double y) override;
+    void reset() override;
+    bool needsUpdate() override { return updated; };
+    void updateDone() override { updated = false; }
+//    void resetIntervals(double &x1, double &x2, double &y1, double &y2) override {
+//        x1 = sx1; x2 = sx2; y1 = sy1; y2 = sy2;
+//        miniter = -1;
+//        maxiter = (int)roots.size()-1;
+//    }
 };
 
 // Base class for all fractals created according to

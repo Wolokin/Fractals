@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Fractals!</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4">
@@ -66,7 +66,33 @@
          <item>
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>You can increase/decrease fidelity with +/- or turn on adaptive fidelity scaling below. </string>
+            <string>You can increase/decrease maximum iterations with '+' and '-' and minimum iterations with '[' and ']'.</string>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Image ratio can be changed with arrow keys and Ctrl.</string>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Fractals based on root finding (mostly Newton fractals) can be reset by pressing 'R'.</string>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -125,15 +151,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QCheckBox" name="checkBox">
-          <property name="text">
-           <string>Adaptive fidelity scaling</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <layout class="QHBoxLayout" name="horizontalLayout_3"/>
       </item>
       <item>
        <spacer name="verticalSpacer">
@@ -151,16 +169,9 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item alignment="Qt::AlignLeft">
-         <widget class="QLabel" name="label_5">
+         <widget class="label_size" name="size_label">
           <property name="text">
-           <string>Current pos:</string>
-          </property>
-         </widget>
-        </item>
-        <item alignment="Qt::AlignRight">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>TextLabel</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -193,7 +204,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew_Window">
    <property name="text">
     <string>New Window</string>
@@ -215,6 +225,11 @@
    <class>comboBox_palettes</class>
    <extends>QComboBox</extends>
    <header>combobox_palettes.h</header>
+  </customwidget>
+  <customwidget>
+   <class>label_size</class>
+   <extends>QLabel</extends>
+   <header>label_size.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
