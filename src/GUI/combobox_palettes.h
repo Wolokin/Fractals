@@ -10,8 +10,6 @@ class comboBox_palettes : public QComboBox
     Q_OBJECT
 public:
     explicit comboBox_palettes(QWidget *parent = nullptr);
-private slots:
-    void textChanged(const QString &text);
 };
 
 #endif // COMBOBOX_PALETTES_H

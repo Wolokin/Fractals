@@ -11,7 +11,7 @@
 #include <GL/gl.h>
 #include <thread>
 #include "src/Logic/constants.h"
-#include "src/Logic/displayer.h"
+#include "src/Logic/fractal.h"
 #include "src/Logic/generators.h"
 #include <string>
 #include <map>
@@ -20,19 +20,22 @@ class OGLWidget : public QOpenGLWidget
 {
     Q_OBJECT
 
+    QTimer *aTimer;
+    const static size_t refreshTime = 30;
+
 
 public:
-    OGLWidget(QWidget *parent = 0);
-    ~OGLWidget();
+    explicit OGLWidget(QWidget *parent = nullptr);
+    ~OGLWidget() override;
     unique_ptr<Fractal> fractal;
-    static const map<string, Generator*> fractals;
 
 protected:
-    void initializeGL();
-    void resizeGL(int w, int h);
-    void paintGL();
+    void initializeGL() override;
+    void resizeGL(int w, int h) override;
+    void paintGL() override;
     void mousePressEvent(QMouseEvent* e) override;
     void wheelEvent(QWheelEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
     //void mouseMoveEvent(QMouseEvent* e) override {cout << "move" << endl;};
 public slots:
     void changeFractal(QString name);

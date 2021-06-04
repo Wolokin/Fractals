@@ -3,11 +3,12 @@
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
-    fractal = make_unique<Fractal>(fractals.at("Mandelbrot"));
-    QTimer *aTimer = new QTimer;
+    fractal = make_unique<Fractal>(Fractal::fractals.at("Mandelbrot"));
+    aTimer = new QTimer;
     connect(aTimer,SIGNAL(timeout()),SLOT(repaint()));
     aTimer->start(30);
-    //setMouseTracking(true);
+    // grabMouse();
+    setMouseTracking(false);
 }
 
 OGLWidget::~OGLWidget()
@@ -63,7 +64,9 @@ void OGLWidget::paintGL()
 
 void OGLWidget::resizeGL(int w, int h)
 {
+    aTimer->stop();
     fractal->resize(w,h);
+    aTimer->start();
 //    glViewport(0,0,w,h);
 //    glMatrixMode(GL_PROJECTION);
 //    glLoadIdentity();
@@ -83,7 +86,18 @@ void OGLWidget::resizeGL(int w, int h)
 
 void OGLWidget::mousePressEvent(QMouseEvent* e) {
     //std::cout << e->localPos().x() << " " << e->localPos().y() << endl;
-    fractal->reposition(e->localPos().x(), e->localPos().y());
+    switch (e->button()) {
+        case Qt::MouseButton::LeftButton:
+            fractal->zoomIn(e->pos().x(), e->pos().y());
+            break;
+        case Qt::MouseButton::RightButton:
+            fractal->zoomOut(e->pos().x(), e->pos().y());
+            break;
+        case Qt::MouseButton::MiddleButton:
+            fractal->reposition(e->localPos().x(), e->localPos().y());
+            break;
+    }
+    e->accept();
 }
 
 void OGLWidget::wheelEvent(QWheelEvent* e) {
@@ -94,12 +108,25 @@ void OGLWidget::wheelEvent(QWheelEvent* e) {
     else {
         fractal->zoomIn(e->pos().x(), e->pos().y());
     }
+    e->accept();
 }
 
 void OGLWidget::changeFractal(QString name) {
-    fractal->setGenerator(fractals.at(name.toStdString()));
+    fractal->setGenerator(Fractal::fractals.at(name.toStdString()));
 }
 
 void OGLWidget::changePalette(QString name) {
     fractal->setPalette(name.toStdString());
+}
+
+void OGLWidget::keyPressEvent(QKeyEvent* e) {
+    switch (e->key()) {
+        case Qt::Key::Key_Plus:
+            fractal->increaseMaxIter();
+            break;
+        case Qt::Key::Key_Minus:
+            fractal->decreaseMaxIter();
+            break;
+    }
+    e->accept();
 }

@@ -37,9 +37,9 @@ set(PROJECT_SOURCES
         src/GUI/mainwindow.cpp
         src/GUI/mainwindow.h
         src/GUI/mainwindow.ui
-        src/Logic/displayer.h
+        src/Logic/fractal.h
         src/Logic/constants.h
-        src/Logic/displayer.cpp
+        src/Logic/fractal.cpp
         src/Logic/generators.h
         src/Logic/generators.cpp
         src/Logic/colorPalette.cpp
@@ -55,7 +55,7 @@ set(PROJECT_SOURCES
 FIND_PACKAGE( Boost 1.71 COMPONENTS program_options REQUIRED )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-include_directories("." "./src" "./src/Logic" "./src/OpenGL" "./src/GUI")
+include_directories("." "./src" "./src/Logic" "./src/OpenGL" "src/GUI")
 
 find_library(FREEGLUT_LIB glut)
 find_library(GL_LIB GL)

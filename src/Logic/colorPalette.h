@@ -23,8 +23,8 @@ public:
     colorPalette(string paletteName, double left, double right);
     rgb getColor(double x);
     void resize(double left, double right);
-    void next();
-    void previous();
+    //void next();
+    //void previous();
 };
 
 #endif //FRACTALS_COLORPALETTE_H

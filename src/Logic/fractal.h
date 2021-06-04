@@ -1,5 +1,5 @@
-#ifndef FRACTALS_DISPLAYER_H
-#define FRACTALS_DISPLAYER_H
+#ifndef FRACTALS_FRACTAL_H
+#define FRACTALS_FRACTAL_H
 
 #include "constants.h"
 #include "generators.h"
@@ -11,6 +11,7 @@ class Fractal {
 
     size_t windowWidth, windowHeight;
 
+    string currentPaletteName = default_palette;
     Generator* gen;
     vector<rgb_value_type> texture;
     std::thread calculationThread;
@@ -24,7 +25,7 @@ class Fractal {
 
 public:
     explicit Fractal(Generator* gen = nullptr);
-    Fractal& operator=(Fractal frac) { gen = move(frac.gen); return *this; }
+    Fractal& operator=(Fractal frac) { gen = frac.gen; return *this; }
     ~Fractal();
 
     void recalculateTexture();
@@ -37,15 +38,17 @@ public:
     void reposition(int x, int y);
     void resize(size_t width, size_t height);
     void setGenerator(Generator* gen);
-    void setPalette(string s) { gen->setPalette(s); recalculateTexture();}
+    void setPalette(const string& s) { currentPaletteName = s; gen->setPalette(s); recalculateTexture();}
 
-    void increaseMaxIter() { gen->increaseMaxIter(); }
-    void decreaseMaxIter() { gen->decreaseMaxIter(); }
+    void increaseMaxIter() { gen->increaseMaxIter(); recalculateTexture();}
+    void decreaseMaxIter() { gen->decreaseMaxIter(); recalculateTexture();}
 
-    void nextPalette() { gen->nextPalette(); }
-    void previousPalette() { gen->previousPalette(); }
+//    void nextPalette() { gen->nextPalette(); }
+//    void previousPalette() { gen->previousPalette(); }
 
-    void abortCalculations() { calculating = false; };
+    void abortCalculations();
+
+    static const map<string, Generator*> fractals;
 };
 
-#endif //FRACTALS_DISPLAYER_H
+#endif //FRACTALS_FRACTAL_H

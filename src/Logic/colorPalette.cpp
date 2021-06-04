@@ -37,28 +37,28 @@ void colorPalette::resize(double left, double right) {
     step = (end -start) / palette.size();
 }
 
-void colorPalette::next() {
-    auto it = palettes.find(paletteName);
-    ++it;
-    if(it == palettes.end()) {
-        it = palettes.begin();
-    }
-    auto kv = *it;
-    paletteName = kv.first;
-    palette = kv.second;
-    resize(start,end);
-    std::cout << "Current palette: " << paletteName << endl;
-}
-
-void colorPalette::previous() {
-    auto it = palettes.find(paletteName);
-    --it;
-    if(it == palettes.begin()) {
-        it = --palettes.end() ;
-    }
-    auto kv = *it;
-    paletteName = kv.first;
-    palette = kv.second;
-    resize(start,end);
-    std::cout << "Current palette: " << paletteName << endl;
-}
+//void colorPalette::next() {
+//    auto it = palettes.find(paletteName);
+//    ++it;
+//    if(it == palettes.end()) {
+//        it = palettes.begin();
+//    }
+//    auto kv = *it;
+//    paletteName = kv.first;
+//    palette = kv.second;
+//    resize(start,end);
+//    std::cout << "Current palette: " << paletteName << endl;
+//}
+//
+//void colorPalette::previous() {
+//    auto it = palettes.find(paletteName);
+//    --it;
+//    if(it == palettes.begin()) {
+//        it = --palettes.end() ;
+//    }
+//    auto kv = *it;
+//    paletteName = kv.first;
+//    palette = kv.second;
+//    resize(start,end);
+//    std::cout << "Current palette: " << paletteName << endl;
+//}

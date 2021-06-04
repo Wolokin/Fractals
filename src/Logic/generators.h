@@ -17,20 +17,21 @@ using namespace std;
 class Generator {
 protected:
     size_t maxiter = 60;
+    size_t miniter = 0;
     static const int maxIterChangeStep = 10;
     colorPalette palette;
 public:
-    Generator() : palette("inferno", 0, maxiter) {}
+    Generator() : palette(default_palette, miniter, maxiter) {}
     virtual ~Generator() = default;
     virtual array<rgb_value_type, 3> getColor(double x, double y) = 0;
     virtual void setStartingIntervals(double &x1, double &x2, double &y1, double &y2) {
         x1 = -2.5; x2 = 2.5; y1 = -2.5; y2 = 2.5;
     }
-    void increaseMaxIter() { maxiter += maxIterChangeStep; palette.resize(0, maxiter); }
-    void decreaseMaxIter() { maxiter -= maxIterChangeStep; palette.resize(0, maxiter); }
-    void setPalette(string& s) { palette = colorPalette(s, 0, maxiter); }
-    void nextPalette() { palette.next(); }
-    void previousPalette() { palette.previous(); }
+    void increaseMaxIter() { maxiter += maxIterChangeStep; palette.resize(miniter, maxiter); }
+    void decreaseMaxIter() { maxiter -= maxIterChangeStep; palette.resize(miniter, maxiter); }
+    void setPalette(string s) { palette = colorPalette(std::move(s), miniter, maxiter); }
+//    void nextPalette() { palette.next(); }
+//    void previousPalette() { palette.previous(); }
 };
 
 // Newton fractal
