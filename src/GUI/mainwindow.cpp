@@ -8,8 +8,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // connection for fractal switching
     connect(ui->comboBox_f, SIGNAL(currentTextChanged(QString)), ui->openGLWidget, SLOT(changeFractal(QString)));
+    // connection for palette switching
     connect(ui->comboBox_p, SIGNAL(currentTextChanged(QString)), ui->openGLWidget, SLOT(changePalette(QString)));
+    // connection for mouse position tracking
     connect(ui->openGLWidget, SIGNAL(mouseMoved(std::string)), ui->size_label, SLOT(mouseMoved(std::string)));
 }
 

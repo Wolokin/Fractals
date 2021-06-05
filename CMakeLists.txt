@@ -48,7 +48,6 @@ set(PROJECT_SOURCES
         src/OpenGL/oglwidget.h src/OpenGL/oglwidget.cpp
         src/GUI/combobox_fractals.h src/GUI/combobox_fractals.cpp
         src/GUI/combobox_palettes.h src/GUI/combobox_palettes.cpp
-        src/Logic/fractals.cpp
         src/GUI/label_size.h src/GUI/label_size.cpp
         src/Logic/fractals.h)
 

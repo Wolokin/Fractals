@@ -11,7 +11,7 @@ class label_size : public QLabel
 public:
     explicit label_size(QWidget *parent = nullptr);
 private slots:
-    void mouseMoved(std::string);
+    void mouseMoved(const std::string&);
 };
 
 #endif // LABEL_SIZE_H

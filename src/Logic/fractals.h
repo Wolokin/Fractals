@@ -65,11 +65,21 @@ public:
                     new Newton([](complex<double> z) { return cosh(z); },
                                [](complex<double> z) { return sinh(z); })
             },
+//            {
+//                    "Newton (cosh(z)-1)",
+//                    new Newton([](complex<double> z) { return cosh(z)+1.0; },
+//                               [](complex<double> z) { return sinh(z); })
+//            },
             {
                     "Burning Ship",
                     new ComplexSeriesFractal([](complex<double> zn, double x, double y) {
                         return pow(complex(abs(zn.real()), abs(zn.imag())), 2) + complex(x,y);
                     })
+            },
+            {
+                    "Newton (z^8 + 15z^4 - 16)",
+                    new Newton([](complex<double> z) { return pow(z,8) + 15.0*pow(z,4) - 16.0; },
+                               [](complex<double> z) { return 8.0*pow(z,7) + 60.0*pow(z,3); })
             },
     } {}
 

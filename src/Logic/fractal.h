@@ -38,7 +38,7 @@ public:
     void zoomOut(int x, int y);
     void reposition(int x, int y);
     void resize(size_t width, size_t height);
-    void reset() { gen->reset(); recalculateTexture(); }
+    void reset() { abortCalculations(); gen->reset(); recalculateTexture(); }
     void setGenerator(Generator* gen);
     void setPalette(const string& s) { currentPaletteName = s; gen->setPalette(s); recalculateTexture();}
 
@@ -47,10 +47,14 @@ public:
     void increaseMinIter() { gen->increaseMinIter(); recalculateTexture();}
     void decreaseMinIter() { gen->decreaseMinIter(); recalculateTexture();}
 
-    void expandWidth() { x1 -= (x2-x1)*expandRatio; x2 += (x2-x1)*expandRatio; recalculateTexture();}
-    void expandHeight() { y1 -= (y2-y1)*expandRatio; y2 += (y2-y1)*expandRatio; recalculateTexture();}
-    void dexpandWidth() { x1 += (x2-x1)*expandRatio; x2 -= (x2-x1)*expandRatio; recalculateTexture();}
-    void dexpandHeight() { y1 += (y2-y1)*expandRatio; y2 -= (y2-y1)*expandRatio; recalculateTexture();}
+    void expandLeft() { x1 -= (x2 - x1) * expandRatio;  recalculateTexture(); }
+    void expandRight() { x2 += (x2 - x1) * expandRatio; recalculateTexture(); }
+    void expandDown() { y1 -= (y2 - y1) * expandRatio;  recalculateTexture(); }
+    void expandUp() { y2 += (y2 - y1) * expandRatio; recalculateTexture(); }
+    void dexpandLeft() { x1 += (x2 - x1) * expandRatio; recalculateTexture();}
+    void dexpandRight() { x2 -= (x2 - x1) * expandRatio; recalculateTexture(); }
+    void dexpandDown() { y1 += (y2 - y1) * expandRatio; recalculateTexture();}
+    void dexpandUp() { y2 -= (y2 - y1) * expandRatio; recalculateTexture(); }
 
     std::pair<double, double> transformPixelToCoords(size_t w, size_t h);
 

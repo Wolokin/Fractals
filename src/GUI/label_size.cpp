@@ -5,7 +5,6 @@ label_size::label_size(QWidget *parent) : QLabel(parent)
 
 }
 
-void label_size::mouseMoved(std::string s) {
-    //std::string s = "x: (" + std::to_string(e->pos().x()) + "), y: (" + std::to_string(e->pos().y()) + ")";
+void label_size::mouseMoved(const std::string& s) {
     setText(QString::fromStdString(s));
 }
