@@ -57,11 +57,10 @@ INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
 include_directories("." "./src" "./src/Logic" "./src/OpenGL" "src/GUI")
 
-find_library(FREEGLUT_LIB glut)
 find_library(GL_LIB GL)
 find_library(GLU_LIB GLU)
 find_library(THREADS_LIB pthread)
-link_libraries("${FREEGLUT_LIB}" "${GL_LIB}" "${GLU_LIB}" "${Boost_LIBRARIES}" "${THREADS_LIB}")
+link_libraries("${GL_LIB}" "${GLU_LIB}" "${Boost_LIBRARIES}" "${THREADS_LIB}")
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Fractals
