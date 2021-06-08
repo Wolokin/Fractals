@@ -76,11 +76,11 @@ public:
  and the point (x,y) is colored in regards to
  iterations needed for it to exceed an abs value of 2
  template<complex<double> (*F)(complex<double>, double, double)> */
-class ComplexSeriesFractal : public Generator {
+class EscapeTimeFractal : public Generator {
     complex<double> (*f)(complex<double>, double, double);
 
 public:
-    explicit ComplexSeriesFractal(complex<double> (*f)(complex<double>, double, double)) : f{f} {}
+    explicit EscapeTimeFractal(complex<double> (*f)(complex<double>, double, double)) : f{f} {}
 
     rgb getColor(double x, double y) override;
 };

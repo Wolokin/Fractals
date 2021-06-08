@@ -72,7 +72,7 @@ complex<double> Newton::newtonRaphson(complex<double> guess, int &iter) {
 Newton::Newton(complex<double> (*f)(complex<double>), complex<double> (*df)(complex<double>), double a)
         : f{f}, df{df}, a{a} {}
 
-rgb ComplexSeriesFractal::getColor(double x, double y) {
+rgb EscapeTimeFractal::getColor(double x, double y) {
     complex<double> zn(x, y);
     int i = 0;
     while (i < maxiter && abs(zn) < 2) {

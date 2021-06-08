@@ -3,44 +3,44 @@
 
 /* This class is used only as a supplier of fractals based on their names
  * If you want to define your own escape-time fractal - this is the place.
- * All you need to do is define a new ComplexSeriesFractal or NewtonFractal map entry */
+ * All you need to do is define a new EscapeTimeFractal or NewtonFractal map entry */
 class FractalsSupplier {
 public:
     const map<string, Generator *> fractals;
     FractalsSupplier(): fractals{
             {
                     "Mandelbrot",
-                    new ComplexSeriesFractal([](complex<double> zn, double x, double y) {
+                    new EscapeTimeFractal([](complex<double> zn, double x, double y) {
                         return zn * zn + complex<double>(x, y);
                     })
             },
             {
                     "Tricorn",
-                    new ComplexSeriesFractal([](complex<double> zn, double x, double y) {
+                    new EscapeTimeFractal([](complex<double> zn, double x, double y) {
                         return pow(conj(zn), 2) + complex<double>(x, y);
                     })
             },
             {
                     "Julia Set (z^2, -0.835 - 0.2325i)",
-                    new ComplexSeriesFractal([](complex<double> zn, double, double) {
+                    new EscapeTimeFractal([](complex<double> zn, double, double) {
                         return pow(zn, 2) + complex<double>(-0.835, -0.2335);
                     })
             },
             {
                     "Julia Set (z^3, -0.535 - 0.1325i)",
-                    new ComplexSeriesFractal([](complex<double> zn, double, double) {
+                    new EscapeTimeFractal([](complex<double> zn, double, double) {
                         return pow(zn, 3) + complex<double>(-0.535, -0.1325);
                     })
             },
             {
                     "Julia Set (z^2 - z^3)",
-                    new ComplexSeriesFractal([](complex<double> zn, double, double) {
+                    new EscapeTimeFractal([](complex<double> zn, double, double) {
                         return pow(zn, 2) - pow(zn, 3) + complex<double>(-0.372, 0.519);
                     })
             },
             {
                     "Neuron",
-                    new ComplexSeriesFractal([](complex<double> zn, double, double) {
+                    new EscapeTimeFractal([](complex<double> zn, double, double) {
                         return pow(complex(-zn.imag(), -zn.real()), 2) + zn;
                     })
             },
@@ -66,7 +66,7 @@ public:
             },
             {
                     "Burning Ship",
-                    new ComplexSeriesFractal([](complex<double> zn, double x, double y) {
+                    new EscapeTimeFractal([](complex<double> zn, double x, double y) {
                         return pow(complex(abs(zn.real()), abs(zn.imag())), 2) + complex(x,y);
                     })
             },
