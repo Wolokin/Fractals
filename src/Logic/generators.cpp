@@ -29,14 +29,14 @@ void Generator::decreaseMinIter() {
     palette.resize(miniter, maxiter);
 }
 
-rgb Newton::getColor(double x, double y) {
+rgb NewtonFractal::getColor(double x, double y) {
     int iter;
     complex<double> d = newtonRaphson(complex(x, y), iter);
     double index = whichRoot(d);
     return palette.getColor(index * (maxiter) / (roots.size()) + (double) iter / roots.size());
 }
 
-int Newton::whichRoot(complex<double> d) {
+int NewtonFractal::whichRoot(complex<double> d) {
     if (not isZero(f(d))) return -1;
     if (not roots.empty()) {
         size_t closest = 0;
@@ -58,7 +58,7 @@ int Newton::whichRoot(complex<double> d) {
     return (int) roots.size() - 1;
 }
 
-complex<double> Newton::newtonRaphson(complex<double> guess, int &iter) {
+complex<double> NewtonFractal::newtonRaphson(complex<double> guess, int &iter) {
     for (iter = 0; iter < maxiter; ++iter) {
         complex<double> eval = f(guess);
         if (abs(eval) < eps) {
@@ -69,7 +69,7 @@ complex<double> Newton::newtonRaphson(complex<double> guess, int &iter) {
     return guess;
 }
 
-Newton::Newton(complex<double> (*f)(complex<double>), complex<double> (*df)(complex<double>), double a)
+NewtonFractal::NewtonFractal(complex<double> (*f)(complex<double>), complex<double> (*df)(complex<double>), double a)
         : f{f}, df{df}, a{a} {}
 
 rgb EscapeTimeFractal::getColor(double x, double y) {

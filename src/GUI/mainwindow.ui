@@ -92,7 +92,7 @@
          <item>
           <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>Fractals based on root finding (mostly Newton fractals) can be reset by pressing 'R'.</string>
+            <string>Fractals based on root finding (mostly NewtonFractal fractals) can be reset by pressing 'R'.</string>
            </property>
            <property name="scaledContents">
             <bool>true</bool>

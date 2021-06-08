@@ -61,7 +61,7 @@ public:
     void reposition(int x, int y);
     // Resizing the window
     void resize(size_t width, size_t height);
-    // Resetting the fractal; currently meaningful only for Newton fractals. NOP by default
+    // Resetting the fractal; currently meaningful only for NewtonFractal fractals. NOP by default
     void reset() { abortCalculations(); gen->reset(); recalculateTexture(); }
 
     // Changing iterations range for better coloring

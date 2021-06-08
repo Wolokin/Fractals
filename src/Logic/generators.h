@@ -44,9 +44,9 @@ public:
     void setPalette(string s) { palette = colorPalette(std::move(s), miniter, maxiter); }
 };
 
-/* Just a basic generalized Newton fractal generator.
+/* Just a basic generalized NewtonFractal fractal generator.
  * It takes the complex function and its first derivative*/
-class Newton : public Generator {
+class NewtonFractal : public Generator {
     // mutex for push_back of new roots
     mutex mut;
     vector<complex<double>> roots;
@@ -62,7 +62,7 @@ class Newton : public Generator {
     bool updated = false;
 
 public:
-    Newton(complex<double> (*f)(complex<double>), complex<double> (*df)(complex<double>), double a = 1);
+    NewtonFractal(complex<double> (*f)(complex<double>), complex<double> (*df)(complex<double>), double a = 1);
 
     rgb getColor(double x, double y) override;
     void reset() override { roots.clear(); };

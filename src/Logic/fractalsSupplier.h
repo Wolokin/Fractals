@@ -45,24 +45,24 @@ public:
                     })
             },
             {
-                    "Newton (z^3 - 1)",
-                    new Newton([](complex<double> z) { return pow(z, 3) + 1.0; },
-                               [](complex<double> z) { return 2.0 * pow(z, 2); })
+                    "NewtonFractal (z^3 - 1)",
+                    new NewtonFractal([](complex<double> z) { return pow(z, 3) + 1.0; },
+                                      [](complex<double> z) { return 2.0 * pow(z, 2); })
             },
             {
-                    "Newton (sin(z))",
-                    new Newton([](complex<double> z) { return sin(z); },
-                               [](complex<double> z) { return cos(z); })
+                    "NewtonFractal (sin(z))",
+                    new NewtonFractal([](complex<double> z) { return sin(z); },
+                                      [](complex<double> z) { return cos(z); })
             },
             {
-                    "Newton (z^(4+3i) - 1)",
-                    new Newton([](complex<double> z) { return pow(z, complex(4.0, 3.0)) - 1.0; },
-                               [](complex<double> z) { return complex(4.0, 3.0) * pow(z, complex(3.0, 3.0)); })
+                    "NewtonFractal (z^(4+3i) - 1)",
+                    new NewtonFractal([](complex<double> z) { return pow(z, complex(4.0, 3.0)) - 1.0; },
+                                      [](complex<double> z) { return complex(4.0, 3.0) * pow(z, complex(3.0, 3.0)); })
             },
             {
-                    "Newton (cosh(z))",
-                    new Newton([](complex<double> z) { return cosh(z); },
-                               [](complex<double> z) { return sinh(z); })
+                    "NewtonFractal (cosh(z))",
+                    new NewtonFractal([](complex<double> z) { return cosh(z); },
+                                      [](complex<double> z) { return sinh(z); })
             },
             {
                     "Burning Ship",
@@ -71,9 +71,9 @@ public:
                     })
             },
             {
-                    "Newton (z^8 + 15z^4 - 16)",
-                    new Newton([](complex<double> z) { return pow(z,8) + 15.0*pow(z,4) - 16.0; },
-                               [](complex<double> z) { return 8.0*pow(z,7) + 60.0*pow(z,3); })
+                    "NewtonFractal (z^8 + 15z^4 - 16)",
+                    new NewtonFractal([](complex<double> z) { return pow(z, 8) + 15.0 * pow(z, 4) - 16.0; },
+                                      [](complex<double> z) { return 8.0*pow(z,7) + 60.0*pow(z,3); })
             },
     } {}
 
