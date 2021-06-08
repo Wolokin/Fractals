@@ -5,12 +5,8 @@ OGLWidget::OGLWidget(QWidget *parent)
     fractal = make_unique<Fractal>(fractals.fractals.at("Mandelbrot"));
     aTimer = new QTimer;
     connect(aTimer, SIGNAL(timeout()), SLOT(repaint()));
-    aTimer->start(30);
-    // grabMouse();
+    aTimer->start(refresh_time);
     setMouseTracking(false);
-}
-
-OGLWidget::~OGLWidget() {
 }
 
 void OGLWidget::initializeGL() {
@@ -23,7 +19,6 @@ void OGLWidget::initializeGL() {
 }
 
 void OGLWidget::paintGL() {
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_TEXTURE_2D);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
@@ -51,40 +46,15 @@ void OGLWidget::paintGL() {
     glEnd();
 
     glFlush();
-
-//    glBegin(GL_TRIANGLES);
-//        glColor3f(1.0, 0.0, 0.0);
-//        glVertex3f(-0.5, -0.5, 0);
-//        glColor3f(0.0, 1.0, 0.0);
-//        glVertex3f( 0.5, -0.5, 0);
-//        glColor3f(0.0, 0.0, 1.0);
-//        glVertex3f( 0.0,  0.5, 0);
-//    glEnd();
 }
 
 void OGLWidget::resizeGL(int w, int h) {
     aTimer->stop();
     fractal->resize(w, h);
     aTimer->start();
-//    glViewport(0,0,w,h);
-//    glMatrixMode(GL_PROJECTION);
-//    glLoadIdentity();
-//    gluPerspective(45, (float)w/h, 0.01, 100.0);
-//    glMatrixMode(GL_MODELVIEW);
-//    glLoadIdentity();
-//    gluLookAt(0,0,5,0,0,0,0,1,0);
 }
 
-// void OGLWidget::recalculate() {
-//     fractal->abortCalculations();
-//     if(calculationThread.joinable()) {
-//         calculationThread.join();
-//     }
-//     calculationThread = std::thread([this]{fractal->recalculateTexture();});
-// }
-
 void OGLWidget::mousePressEvent(QMouseEvent *e) {
-    //std::cout << e->localPos().x() << " " << e->localPos().y() << endl;
     switch (e->button()) {
         case Qt::MouseButton::LeftButton:
             fractal->zoomIn(e->pos().x(), e->pos().y());
@@ -102,7 +72,6 @@ void OGLWidget::mousePressEvent(QMouseEvent *e) {
 }
 
 void OGLWidget::wheelEvent(QWheelEvent *e) {
-    // cout << "wheel" << endl;
     if (e->angleDelta().y() < 0) {
         fractal->zoomOut(e->pos().x(), e->pos().y());
     } else {
@@ -111,11 +80,11 @@ void OGLWidget::wheelEvent(QWheelEvent *e) {
     e->accept();
 }
 
-void OGLWidget::changeFractal(QString name) {
+void OGLWidget::changeFractal(const QString &name) {
     fractal->setGenerator(fractals.fractals.at(name.toStdString()));
 }
 
-void OGLWidget::changePalette(QString name) {
+void OGLWidget::changePalette(const QString &name) const {
     fractal->setPalette(name.toStdString());
 }
 
@@ -161,6 +130,5 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *e) {
     auto[x, y] = fractal->transformPixelToCoords(e->pos().x(), e->pos().y());
     std::stringstream ss;
     ss << std::fixed << std::setprecision(15) << "x: " << x << "\ny: " << y;
-    //std::string s = "x: (" + std::to_string(x) + "), y: (" + std::to_string(y) + ")";
     mouseMoved(ss.str());
 }

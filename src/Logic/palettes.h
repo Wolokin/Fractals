@@ -1,5 +1,6 @@
 
 // palettes copied from https://github.com/jgreitemann/colormap/blob/master/include/colormap/palettes.hpp
+// and from https://github.com/jiffyclub/palettable
 
 #ifndef FRACTALS_PALETTES_H
 #define FRACTALS_PALETTES_H

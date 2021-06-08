@@ -1,10 +1,8 @@
 #include "combobox_fractals.h"
-#include <iostream>
 
-comboBox_fractals::comboBox_fractals(QWidget *parent) : QComboBox(parent)
-{
-    Fractals fractals;
-    for(const auto& it : fractals.fractals) {
+comboBox_fractals::comboBox_fractals(QWidget *parent) : QComboBox(parent) {
+    FractalsSupplier fractalsSupplier;
+    for (const auto &it : fractalsSupplier.fractals) {
         addItem(QString::fromStdString(it.first));
     }
     setCurrentText(QString::fromStdString(default_fractal));

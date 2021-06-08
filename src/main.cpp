@@ -5,10 +5,10 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setAttribute(Qt::AA_CompressHighFrequencyEvents, false);
-    a.setAttribute(Qt::AA_CompressTabletEvents, false);
+    QApplication::setAttribute(Qt::AA_CompressHighFrequencyEvents, false);
+    QApplication::setAttribute(Qt::AA_CompressTabletEvents, false);
     MainWindow w;
     w.show();
 
-    return a.exec();
+    return QApplication::exec();
 }

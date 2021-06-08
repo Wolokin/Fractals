@@ -15,19 +15,17 @@
 #include "src/Logic/generators.h"
 #include <string>
 #include <map>
-#include "fractals.h"
+#include "fractalsSupplier.h"
 
 class OGLWidget : public QOpenGLWidget
 {
     Q_OBJECT
 
     QTimer *aTimer;
-    const static size_t refreshTime = 30;
-    Fractals fractals;
+    FractalsSupplier fractals;
 
 public:
     explicit OGLWidget(QWidget *parent = nullptr);
-    ~OGLWidget() override;
     unique_ptr<Fractal> fractal;
 
 protected:
@@ -39,10 +37,8 @@ protected:
     void keyPressEvent(QKeyEvent* e) override;
     void mouseMoveEvent(QMouseEvent* e) override;
 public slots:
-    void changeFractal(QString name);
-    void changePalette(QString name);
-    //void recalculate();
-    //std::thread calculationThread;
+    void changeFractal(const QString& name);
+    void changePalette(const QString& name) const;
 signals:
     void mouseMoved(std::string);
 };

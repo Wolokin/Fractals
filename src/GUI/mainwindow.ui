@@ -169,7 +169,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item alignment="Qt::AlignLeft">
-         <widget class="label_size" name="size_label">
+         <widget class="label_pos" name="pos_label">
           <property name="text">
            <string/>
           </property>
@@ -227,9 +227,9 @@
    <header>combobox_palettes.h</header>
   </customwidget>
   <customwidget>
-   <class>label_size</class>
+   <class>label_pos</class>
    <extends>QLabel</extends>
-   <header>label_size.h</header>
+   <header>label_pos.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

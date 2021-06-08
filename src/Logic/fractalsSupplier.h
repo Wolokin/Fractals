@@ -1,14 +1,13 @@
-//
-// Created by filip on 04.06.2021.
-//
+#ifndef FRACTALS_FRACTALSSUPPLIER_H
+#define FRACTALS_FRACTALSSUPPLIER_H
 
-#ifndef FRACTALS_FRACTALS_H
-#define FRACTALS_FRACTALS_H
-
-class Fractals {
+/* This class is used only as a supplier of fractals based on their names
+ * If you want to define your own escape-time fractal - this is the place.
+ * All you need to do is define a new ComplexSeriesFractal or NewtonFractal map entry */
+class FractalsSupplier {
 public:
     const map<string, Generator *> fractals;
-    Fractals(): fractals{
+    FractalsSupplier(): fractals{
             {
                     "Mandelbrot",
                     new ComplexSeriesFractal([](complex<double> zn, double x, double y) {
@@ -23,19 +22,19 @@ public:
             },
             {
                     "Julia Set (z^2, -0.835 - 0.2325i)",
-                    new ComplexSeriesFractal([](complex<double> zn, double x, double y) {
+                    new ComplexSeriesFractal([](complex<double> zn, double, double) {
                         return pow(zn, 2) + complex<double>(-0.835, -0.2335);
                     })
             },
             {
                     "Julia Set (z^3, -0.535 - 0.1325i)",
-                    new ComplexSeriesFractal([](complex<double> zn, double x, double y) {
+                    new ComplexSeriesFractal([](complex<double> zn, double, double) {
                         return pow(zn, 3) + complex<double>(-0.535, -0.1325);
                     })
             },
             {
                     "Julia Set (z^2 - z^3)",
-                    new ComplexSeriesFractal([](complex<double> zn, double x, double y) {
+                    new ComplexSeriesFractal([](complex<double> zn, double, double) {
                         return pow(zn, 2) - pow(zn, 3) + complex<double>(-0.372, 0.519);
                     })
             },
@@ -65,11 +64,6 @@ public:
                     new Newton([](complex<double> z) { return cosh(z); },
                                [](complex<double> z) { return sinh(z); })
             },
-//            {
-//                    "Newton (cosh(z)-1)",
-//                    new Newton([](complex<double> z) { return cosh(z)+1.0; },
-//                               [](complex<double> z) { return sinh(z); })
-//            },
             {
                     "Burning Ship",
                     new ComplexSeriesFractal([](complex<double> zn, double x, double y) {
@@ -83,7 +77,7 @@ public:
             },
     } {}
 
-    ~Fractals() { for(const auto& it : fractals) delete it.second; }
+    ~FractalsSupplier() { for(const auto& it : fractals) delete it.second; }
 };
 
-#endif //FRACTALS_FRACTALS_H
+#endif //FRACTALS_FRACTALSSUPPLIER_H

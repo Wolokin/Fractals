@@ -5,11 +5,11 @@
 #include <string>
 #include <QMouseEvent>
 
-class label_size : public QLabel
+class label_pos : public QLabel
 {
     Q_OBJECT
 public:
-    explicit label_size(QWidget *parent = nullptr);
+    explicit label_pos(QWidget *parent = nullptr) : QLabel{parent} {} ;
 private slots:
     void mouseMoved(const std::string&);
 };

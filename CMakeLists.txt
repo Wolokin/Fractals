@@ -48,8 +48,8 @@ set(PROJECT_SOURCES
         src/OpenGL/oglwidget.h src/OpenGL/oglwidget.cpp
         src/GUI/combobox_fractals.h src/GUI/combobox_fractals.cpp
         src/GUI/combobox_palettes.h src/GUI/combobox_palettes.cpp
-        src/GUI/label_size.h src/GUI/label_size.cpp
-        src/Logic/fractals.h)
+        src/GUI/label_pos.h src/GUI/label_pos.cpp
+        src/Logic/fractalsSupplier.h)
 
 # adding boost dirs
 FIND_PACKAGE( Boost 1.71 COMPONENTS program_options REQUIRED )

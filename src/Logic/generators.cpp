@@ -1,12 +1,39 @@
 #include "generators.h"
 
+void Generator::resetIntervals(double &x1, double &x2, double &y1, double &y2) {
+    x1 = sx1;
+    x2 = sx2;
+    y1 = sy1;
+    y2 = sy2;
+    maxiter = default_maxiter;
+    miniter = default_miniter;
+}
+
+void Generator::increaseMaxIter() {
+    maxiter += iter_change_step;
+    palette.resize(miniter, maxiter);
+}
+
+void Generator::decreaseMaxIter() {
+    maxiter -= iter_change_step;
+    palette.resize(miniter, maxiter);
+}
+
+void Generator::increaseMinIter() {
+    miniter += iter_change_step;
+    palette.resize(miniter, maxiter);
+}
+
+void Generator::decreaseMinIter() {
+    miniter -= iter_change_step;
+    palette.resize(miniter, maxiter);
+}
+
 rgb Newton::getColor(double x, double y) {
-    // std::function func = [this](complex<double> d) { return pair(this->f(d), this->df(d)); };
-    //complex<double> d = boost::math::tools::complex_newton(func, complex<double>(x, y));
     int iter;
-    complex<double> d = newtonRaphson(complex(x,y), iter);
+    complex<double> d = newtonRaphson(complex(x, y), iter);
     double index = whichRoot(d);
-    return palette.getColor(index*(maxiter)/(roots.size()) + (double)iter/roots.size());
+    return palette.getColor(index * (maxiter) / (roots.size()) + (double) iter / roots.size());
 }
 
 int Newton::whichRoot(complex<double> d) {
@@ -32,41 +59,18 @@ int Newton::whichRoot(complex<double> d) {
 }
 
 complex<double> Newton::newtonRaphson(complex<double> guess, int &iter) {
-    for(iter = 0; iter < maxiter; ++iter) {
+    for (iter = 0; iter < maxiter; ++iter) {
         complex<double> eval = f(guess);
-        if(abs(eval) < eps) {
+        if (abs(eval) < eps) {
             break;
         }
-        guess = guess - a*eval/df(guess);
+        guess = guess - a * eval / df(guess);
     }
     return guess;
 }
 
-void Newton::reset() {
-    roots.clear();
-}
-
-//rgb Mandelbrot::getColor(double x, double y) {
-//    complex<double> z(0,0);
-//    complex<double> c(x,y);
-//    size_t i = 0;
-//    while(i < maxiter && abs(z) < 2) {
-//        z = z*z + c;
-//        ++i;
-//    }
-//    return palette.getColor(i);
-//}
-
-//rgb JuliaSet::getColor(double x, double y) {
-//    complex<double> z(0,0);
-//    complex<double> c(x,y+0.8);
-//    size_t i = 0;
-//    while(i < maxiter && abs(z) < 2) {
-//        z = z*z + pow(c,exp);
-//        ++i;
-//    }
-//    return palette.getColor(i);
-//}
+Newton::Newton(complex<double> (*f)(complex<double>), complex<double> (*df)(complex<double>), double a)
+        : f{f}, df{df}, a{a} {}
 
 rgb ComplexSeriesFractal::getColor(double x, double y) {
     complex<double> zn(x, y);
