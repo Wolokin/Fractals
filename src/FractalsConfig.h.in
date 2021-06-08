@@ -1,2 +1,2 @@
-#define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR @
-#define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR @
+#define Fractals_VERSION_MAJOR @Fractals_VERSION_MAJOR @
+#define Fractals_VERSION_MINOR @Fractals_VERSION_MINOR @
