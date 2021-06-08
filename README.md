@@ -42,3 +42,5 @@ This fractal is created using base class NewtonFractal
                                       [](complex<double> z) { return derivativeOfSomeComplexFunction(z); })
             },
 ```
+## Important notes
+Currently this program is set to use 20 threads for calculations. If you find that to be too much or too little it can be changed in the constants.h file.
