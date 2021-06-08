@@ -17,6 +17,7 @@ as well as Qt5 (I've tested this on version 5.12.8). Here's a comprehensive inst
 You can change currently displayed fractal as well as the color palette with the drop-down lists on the left. Fractal exploration is mainly done using mouse:
 - Zoom-in/Zoom-out with the scroll wheel or with LB/RB
 - Center the fractal on the mouse with middle button
+
 Some additional controls are:
 - Increase/decrease maximum iterations during computations with '+' and '-'
 - Increase/decrease minimum iterations during computations with '[' and ']'
