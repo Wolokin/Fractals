@@ -30,7 +30,7 @@ This fractal is created using base class EscapeTimeFractal
             {
                     "Your escape-time fractal name",
                     new EscapeTimeFractal([](complex<double> zn, double x, double y) {
-                        return yourFunction(zn, x, y); // Should return $z_{n+1}$
+                        return yourFunction(zn, x, y); // Should return z_{n+1}
                     })
             },
 ```
